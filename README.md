@@ -1,44 +1,56 @@
-Nola CS Chatbot: Automação de Suporte com IA e n8n
+# Nola CS Chatbot: Automação de Suporte com IA e n8n
 
-Este projeto foi desenvolvido como uma solução de Customer Success (CS) para a Nola. O objetivo é automatizar o atendimento de primeiro nível, utilizando Inteligência Artificial para consultar uma base de conhecimento dinâmica e registrar logs de auditoria em tempo real.
+Este projeto foi desenvolvido como uma solução de **Customer Success (CS)** para a empresa **Nola**. O objetivo é automatizar o atendimento de primeiro nível, utilizando Inteligência Artificial para consultar uma base de conhecimento dinâmica e registrar logs de auditoria em tempo real.
 
-🚀 Funcionalidades
-Atendimento Inteligente: Processamento de linguagem natural para entender dúvidas de clientes.
+---
 
-Base de Conhecimento Dinâmica: Integração com Google Sheets que permite atualizações rápidas pela equipe de CS sem necessidade de código.
+## Funcionalidades
 
-Fidelidade de Dados: Configurado com temperatura zero para garantir que a IA não "alucine" e siga estritamente as orientações oficiais.
+* **Atendimento Inteligente:** Processamento de linguagem natural para entender e resolver dúvidas de clientes.
+* **Base de Conhecimento Dinâmica:** Integração com Google Sheets que permite atualizações rápidas pela equipe de CS sem necessidade de alteração no fluxo.
+* **Fidelidade Total:** Configurado com *Temperature 0* e comandos de sistema rígidos para garantir que a IA replique exatamente as informações oficiais, sem alucinações.
+* **Logs de Auditoria:** Registro automático de cada interação (data, pergunta, resposta e ID da sessão) para monitoramento de métricas.
 
-Logs de Auditoria: Registro automático de cada interação (pergunta, resposta e ID da sessão) para análise de métricas e melhoria contínua.
+---
 
-🛠️ Tecnologias Utilizadas
-n8n.io: Orquestrador de fluxo de trabalho (Workflow Automation).
+## Tecnologias Utilizadas
 
-Groq Cloud (Llama 3.1): Modelo de linguagem de baixa latência para processamento das respostas.
+* **n8n.io:** Orquestrador de workflow e automação de processos.
+* **Groq Cloud (Llama 3.1):** LLM de alta performance e baixa latência.
+* **Google Sheets API:** Utilizado como banco de dados para conhecimento e repositório de logs.
+* **LangChain:** Framework para gerenciamento do agente de IA e ferramentas (*Tools*).
 
-Google Sheets API: Utilizado como banco de dados NoSQL para conhecimento e logs.
+---
 
-LangChain: Implementação de agentes de IA com ferramentas específicas (Tools).
+## Segurança e Configuração (Importante)
 
-📋 Estrutura do Fluxo
-Gatilho (Chat Trigger): Recebe a entrada do usuário via interface de chat.
+Para fins de portfólio e proteção de dados sensíveis, o arquivo `workflow.json` disponível neste repositório foi **anonimizado**.
 
-Agente de IA (AI Agent): O "cérebro" que decide quando consultar a planilha.
+### Campos alterados por segurança:
 
-Memory: Mantém o contexto para perguntas de acompanhamento.
+* **`documentId`**: Removido o ID original da planilha do Google.
+* **`credentials`**: Os IDs de credenciais (Google e Groq) foram substituídos por placeholders.
+* **`instanceId` / `webhookId`**: Removidos identificadores únicos da instância do n8n.
 
-Tool (Google Sheets): Função específica para buscar dados em colunas e linhas da planilha.
+### Como configurar o seu:
 
-Logs (Append Row): Após a resposta, o sistema grava automaticamente os dados em uma aba de monitoramento.
+1. **Importe** o arquivo JSON no seu n8n.
+2. **Crie suas credenciais** para a Groq API e Google Sheets OAuth2 nos nós correspondentes.
+3. **Substitua o ID da Planilha** nos nós "Google Sheets Tool" e "Append row in sheet" pelo ID da sua própria planilha.
+4. Certifique-se de que sua planilha possui as abas e colunas conforme configurado nos campos de mapeamento.
 
-⚙️ Como Replicar este Projeto
-Importe o arquivo nola-bot-workflow.json para o seu n8n.
+---
 
-Configure suas credenciais na Groq Cloud e gere uma API Key.
+## Estrutura do Fluxo
 
-Configure as credenciais do Google Cloud Console (OAuth2) para acesso ao Google Sheets.
+1. **Gatilho (Chat Trigger):** Recebe a entrada do usuário via interface de chat.
+2. **Agente de IA (AI Agent):** O núcleo lógico que decide quando consultar a ferramenta.
+    * **Memory:** Mantém o contexto para perguntas sequenciais.
+    * **Tool (Sheets):** Busca respostas específicas na base de dados.
+3. **Saída de Dados (Logs):** Grava a interação final na aba de monitoramento do Google Sheets.
 
-No nó do AI Agent, ajuste o System Prompt para definir as regras de negócio do seu bot.
+---
 
-👨‍💻 Autor
-Danillo Fontes Carvalho
+### Autor
+
+Danillo F Carvalho
